@@ -1,6 +1,6 @@
 
 
-# APEX-GenAI-Agent
+# Oracle APEX GenAI Agent
 A custom component designed for Oracle APEX. 
 Providing a modern GenAI Agent that enables support for chatting with your data with Gemini Nano or local Custom Modals.
 
