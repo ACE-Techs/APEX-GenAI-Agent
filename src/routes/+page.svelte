@@ -325,6 +325,7 @@
 				try {
 					console.log('initialising pipeline');
 					// Import the worker as a module
+					/* @vite-ignore */
 					const Worker = await import(worker);
 
 					// Create an instance of the worker

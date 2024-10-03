@@ -1,3 +1,4 @@
+/* @vite-ignore */
 import { pipeline, env } from '@xenova/transformers';
 
 // Skip local model check
