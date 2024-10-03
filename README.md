@@ -29,6 +29,8 @@ You can now start chatting to Gemini Nano in your browser..
 
 
 # prerequisites
+You need to have the Gemini Nano in browser model running against window.ai<br /> 
+_- we will shortly be adding fallback support for other local browser based LLMs that will run in any browser._
 
 ## Check if window.ai is setup in chrome
 
