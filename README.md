@@ -23,6 +23,10 @@ npm run dev
 ```
 Once launched open a browser and head to http://localhost:5173
 
+## Start Chat
+In the bottom right corner you should see an icon - select it to load up the chat interface.<br />
+You can now start chatting to Gemini Nano in your browser..
+
 
 # prerequisites
 
