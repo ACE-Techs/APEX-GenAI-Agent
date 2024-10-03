@@ -10,7 +10,7 @@ Providing a modern GenAI Agent that enables support for chatting with your data 
 ...
 
 # Installation
-In your console goto the folder where you have this project and install it's dependancies.
+In your console goto the folder where you have this project and install it's dependencies.
 
 ```
 npm install
