@@ -38,7 +38,8 @@ _- we will shortly be adding fallback support for other local browser based LLMs
 2. if window.ai is found you can skip the next step on setting up gemini nano
 
 ## Gemini-nano
-Today window.ai is not officially available on the chrome browser and is currently part of Chrome Canary as an early preview of the integrated gemini-nano services. <br />
+Today window.ai is not officially available on the chrome browser and is currently part of Chrome Canary as an early preview of the integrated gemini-nano services.
+
 Follow the following steps to enable Gemini Nano in Chrome Canary.
 
 ### Enable Gemini Nano in chrome canary
