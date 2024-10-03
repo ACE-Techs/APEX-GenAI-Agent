@@ -39,6 +39,7 @@
 	//genAI
 	let enableBrowserAI_ifSupported = true;
 	let pipelineWorker;
+	let isWebGPUSupported = false;
 
 	//Primary Intent Structure
 	let primaryIntents = {
@@ -137,6 +138,9 @@
 
 
 	onMount(async () => {
+		//add gpu check
+		isWebGPUSupported = !!navigator.gpu;
+
 		//initialise local bots
 		initialiseBots();
 	});
@@ -158,6 +162,154 @@
 		//initIntentDetection();
 		//initEntityDetection('skills/order/dialogs/LLMEnhancementBot-OrderStatus-Flow.yaml');
 		//initTranslator(i18n);
+	}
+
+	/**
+	 * geminiFallback
+	 * if gemini not support and custom model not used then try and load PHI
+	 */
+	function geminiFallback() {
+		return new Promise(async (resolve, reject) => {
+			//Phi relies on webgpu support..
+			if (isWebGPUSupported) {
+				try {
+					console.log('initialising Phi');
+					// Import the worker as a module
+					/* @vite-ignore */
+					const Worker = await import('../lib/workers/transformer/phi-3.5-webgpu.js?worker&inline');
+
+					// Create an instance of the worker
+					const session = new Worker.default();
+
+					const onMessageReceived = (e) => {
+						switch (e.data.status) {
+							case 'loading':
+								console.log('---loading');
+								break;
+							case 'initiate':
+								console.log('---initiate');
+								ready = false;
+								break;
+							case 'progress':
+								// Add loading bar functionality here
+								console.log('---progress', e.data);
+								progress = e.data.progress;
+								break;
+							case 'done':
+								// Add loading bar functionality here
+								console.log('---done', e.data);
+								break;
+							case 'ready':
+								console.log('---ready');
+								console.log('[ready] - Creating the session succeeded!');
+
+								// Set the global ready flag or any state you need
+								genAIReady = true;
+
+								// Resolve the promise indicating success
+								resolve({
+									worker: session,
+									prompt: function (text) {
+										return new Promise((resolve, reject) => {
+											// Define a one-time listener for the worker's response
+											const handleMessage = (event) => {
+												resolve(event.data.output); // Resolve with the response from the worker
+												session.removeEventListener('message', handleMessage); // Remove listener after response
+												session.removeEventListener('error', handleError); // Remove error listener
+											};
+
+											// Handle potential errors from the worker
+											const handleError = (error) => {
+												reject(error); // Reject the promise if there's an error
+												session.removeEventListener('message', handleMessage); // Remove message listener
+												session.removeEventListener('error', handleError); // Remove error listener
+											};
+
+											// Add the message event listener
+											session.addEventListener('message', handleMessage);
+
+											// Add the error event listener
+											session.addEventListener('error', handleError);
+
+											// Send the message to the worker
+											session.postMessage({ 
+												text:text,
+												classes:['Order Status', 'Help',]
+											});
+										});
+									}
+								});
+
+								// Remove the `onMessageReceived` listener as it's no longer needed
+								session.removeEventListener('message', onMessageReceived);
+								break;
+								
+							case 'start':
+								console.log('---start', e.data);
+								// Start generation
+								// setMessages((prev) => [
+								// 	...prev,
+								// 	{ 
+								// 		role: 'assistant', 
+								// 		content: '' },
+								// ]);
+							break;
+							case 'update':
+								console.log('---update', e.data);
+								// Generation update: update the output text.
+								// Parse messages
+								// const { output, tps, numTokens } = e.data;
+								// setTps(tps);
+								// setNumTokens(numTokens);
+								// setMessages((prev) => {
+								// 	const cloned = [...prev];
+								// 	const last = cloned.at(-1);
+								// 	cloned[cloned.length - 1] = {
+								// 		...last,
+								// 		content: last.content + output,
+								// 	};
+								// 	return cloned;
+								//});
+							break;
+							case 'complete':
+								console.log('---complete', e);
+								break;
+							case 'error':
+								console.log('---error', e);
+								break;
+							default:
+								console.log('Found new status', e.data.status);
+								break;
+						}
+					};
+
+					//capture errors from worker
+					const onErrorReceived = (e) => {
+						console.error('Worker error:', e);
+					};
+
+					// Attach the callback function as an event listener.
+					session.addEventListener('message', onMessageReceived);
+					worker.current.addEventListener('error', onErrorReceived);
+
+					//check dependencies pass
+					session.postMessage({ type: 'check' });
+
+					// Send an initialization message to the worker to load LLM
+					session.postMessage({ action: 'load' });
+
+				} catch (e) {
+					console.error('Creating the local GenAI session failed. More details: ', e);
+
+					// Reject the promise indicating failure
+					reject(e);
+				}
+			} else {
+				//todo add server fallback support..
+				console.warn('AI Disabled no support available');
+				reject();
+			}
+		});
 	}
 
 	/**
@@ -187,7 +339,7 @@
 			genAIBot.entity.destroy();
 		}
 
-		genAIBot.intent = await initialiseSession(preprompt,localWorker,'intentDetection');
+		genAIBot.intent = await initialiseSession(preprompt,{},'intentDetection');
 	}
 
 	/**
