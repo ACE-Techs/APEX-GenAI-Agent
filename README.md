@@ -30,7 +30,7 @@ You can now start chatting to Gemini Nano in your browser..
 
 # prerequisites
 You need to have the Gemini Nano in browser model running against window.ai<br /> 
-_- we will shortly be adding fallback support for other local browser based LLMs that will run in any browser._
+_- we will shortly be adding fallback support for other local browser based LLMs such as Microsoft PHI that will run in any browser._
 
 ## Check if window.ai is setup in chrome
 
@@ -57,6 +57,20 @@ Follow the following steps to enable Gemini Nano in Chrome Canary.
 3. Click "Check for Update" - this will download the LLM - 1.5gb and may take some time.
 4. Restart Chrome
 
+# Local LLMs made available 
+
+## Gemini-Nano (Google)
+Gemini is the result of large-scale collaborative efforts by teams across Google. It was built from the ground up to be multimodal, which means it can generalize and seamlessly understand, operate across and combine different types of information including text, code, audio, image and video.
+
+Gemini Nano, the most efficient version of the Gemini family of LLMs, designed to run locally on most modern desktop and laptop computers. With built-in AI, your website or web application can perform AI-powered tasks without needing to deploy or manage its own AI models.
+
+## Phi-3.5-mini (Microsoft)
+Phi-3.5-mini is a lightweight, state-of-the-art open model built upon datasets used for Phi-3 - synthetic data and filtered publicly available websites with a focus on very high-quality, reasoning dense data.
+
+The model belongs to the Phi-3 model family and supports 128K token context length. The model underwent a rigorous enhancement process, incorporating both supervised fine-tuning, proximal policy optimization, and direct preference optimization to ensure precise instruction adherence and robust safety measures.
+
+Long Context
+Phi-3.5-mini supports 128K context length, therefore the model is capable of several long context tasks including long document/meeting summarization, long document QA, long document information retrieval.
 
 ## Developed and Maintained by
 
