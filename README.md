@@ -17,7 +17,7 @@ npm install
 ```
 
 ## Launch Browser Interface
-In your console run the following cmd to initialis a webserver
+In your console run the following cmd to initialise a webserver
 ```
 npm run dev
 ```
