@@ -41,7 +41,7 @@ _- we will shortly be adding fallback support for other local browser based LLMs
 Today window.ai is not officially available on the chrome browser and is currently part of Chrome Canary as an early preview of the integrated gemini-nano services. <br />
 Follow the following steps to enable Gemini Nano in Chrome Canary.
 
-### Enable Gemini nNno in chrome canary
+### Enable Gemini Nano in chrome canary
 
 1. Open Chrome Canary and type "chrome://flags/" in the URL bar
 2. In the search box type "prompt API"
