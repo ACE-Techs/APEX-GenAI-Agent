@@ -12,6 +12,31 @@ Providing a modern GenAI Agent that enables support for chatting with your data 
 # Installation
 ...
 
+# prerequisites
+
+## Check if window.ai is setup in chrome
+
+1. Open Chrome Dev Tools and in the console type "window.ai"
+2. if window.ai is found you can skip the next step on setting up gemini nano
+
+## Gemini-nano
+Today window.ai is not officially available on the chrome browser and is currently part of Chrome Canary as an early preview of the integrated gemini-nano services. <br />
+Follow the following steps to enable Gemini Nano in Chrome Canary.
+
+### Enable Gemini nNno in chrome canary
+
+1. Open Chrome Canary and type "chrome://flags/" in the URL bar
+2. In the search box type "prompt API"
+3. Under "Prompt API for Gemini Nano" switch to "Enabled"
+4. Update the search box to "optimization guide on"
+5. Under "Enables optimization guide on device" switch to "Enabled ByPassPerfRequirement"
+
+### Install/Update Gemini Nano
+
+1. Open Chrome Canary and type "chrome://components/" in the URL bar
+2. Find "Optimization Guide On Device Model"
+3. Click "Check for Update" - this will download the LLM - 1.5gb and may take some time.
+4. Restart Chrome
 
 
 ## Developed and Maintained by
