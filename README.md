@@ -10,7 +10,19 @@ Providing a modern GenAI Agent that enables support for chatting with your data 
 ...
 
 # Installation
-...
+In your console goto the folder where you have this project and install it's dependancies.
+
+```
+npm install
+```
+
+## Launch Browser Interface
+In your console run the following cmd to initialis a webserver
+```
+npm run dev
+```
+Once launched open a browser and head to http://localhost:5173
+
 
 # prerequisites
 
